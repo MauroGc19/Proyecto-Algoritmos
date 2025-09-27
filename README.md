@@ -23,19 +23,19 @@ Este proyecto utiliza Gemini 2.5 Flash para analizar la eficiencia de algoritmos
     ```
 
 2. **Crea un entorno virtual** (recomendado):
-```bash
-python -m venv venv
-```
+    ```bash
+    python -m venv venv
+    ```
 
-```bash
-# En Linux/Mac
-source venv/bin/activate
-```
+    ```bash
+    # En Linux/Mac
+    source venv/bin/activate
+    ```
 
-```bash
-# En Windows
-venv\Scripts\activate
-```
+    ```bash
+    # En Windows
+    venv\Scripts\activate
+    ```
 
 3. **Instala las dependencias**:
    ```bash
