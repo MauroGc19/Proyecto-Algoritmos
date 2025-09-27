@@ -26,7 +26,7 @@ Este proyecto utiliza Gemini 2.5 Flash para analizar la eficiencia de algoritmos
    ```bash
    python -m venv venv
    source venv/bin/activate  # En Linux/Mac
-   # venv\Scripts\activate   # En Windows
+   venv\Scripts\activate   # En Windows
    ```
 
 3. **Instala las dependencias**:
