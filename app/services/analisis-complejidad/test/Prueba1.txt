@@ -1,0 +1,6 @@
+FUNCION AnalizarComplejidad(AlgoritmoFuente, n)
+begin
+  ► Variables locales
+  ComplejidadPeorCaso 🡨 0
+  AlgoritmoFuente 🡨 AlgoritmoFuente * n
+end
