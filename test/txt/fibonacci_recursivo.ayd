@@ -1,0 +1,45 @@
+► Programa para calcular Fibonacci de forma recursiva
+► Utiliza función recursiva con casos base
+
+► Solicitar el término deseado
+leer n
+
+► Llamar a la función recursiva
+CALL calcular_resultado(n)
+
+► Función recursiva de Fibonacci
+FUNCION fib(num) begin
+    ► Caso base 1: fib(0) = 0
+    if (num = 0) then begin
+        resultado 🡨 0
+    end else begin
+        ► Caso base 2: fib(1) = 1
+        if (num = 1) then begin
+            resultado 🡨 1
+        end else begin
+            ► Caso recursivo: fib(n) = fib(n-1) + fib(n-2)
+            anterior1 🡨 num - 1
+            anterior2 🡨 num - 2
+            
+            ► Llamada recursiva para n-1
+            CALL fib(anterior1)
+            fib_n1 🡨 resultado
+            
+            ► Llamada recursiva para n-2
+            CALL fib(anterior2)
+            fib_n2 🡨 resultado
+            
+            ► Sumar los dos resultados
+            resultado 🡨 fib_n1 + fib_n2
+        end
+    end
+end
+
+► Función auxiliar para mostrar el resultado
+FUNCION calcular_resultado(termino) begin
+    if (termino < 0) then begin
+        resultado 🡨 0
+    end else begin
+        CALL fib(termino)
+    end
+end

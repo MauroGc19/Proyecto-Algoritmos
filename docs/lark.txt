@@ -1,0 +1,74 @@
+start: statement+
+
+statement: assignment
+            | for_loop
+            | while_loop
+            | repeat_loop
+            | if_statement
+            | class_def
+            | object_decl
+            | subroutine_def
+            | subroutine_call
+            | COMMENT
+            | input_stmt
+            | function_decl
+
+assignment: var_name "🡨" expr
+input_stmt: "leer" var_name
+
+for_loop: "for" var_name expr "to" expr "do" "begin" statement+ "end"
+while_loop: "while" "(" expr ")" "do" "begin" statement+ "end"
+repeat_loop: "repeat" statement+ "until" "(" expr ")"
+if_statement: "if" "(" expr ")" "then" "begin" statement+ "end" ("else" "begin" statement+ "end")?
+
+class_def: CNAME "{" attr_list "}"
+attr_list: var_name+
+object_decl: CNAME var_name
+
+subroutine_def: CNAME "(" param_list? ")" "begin" statement+ "end"
+param_list: param ("," param)*
+param: array_param | object_param | var_name
+array_param: var_name array_dims
+array_dims: ("[" (NUMBER | var_name)? "]")+
+object_param: CNAME var_name
+
+subroutine_call: "CALL" CNAME "(" arg_list? ")"
+arg_list: expr ("," expr)*
+
+function_decl: "FUNCION" CNAME "(" param_list? ")" "begin" statement+ "end"
+
+expr: expr_bool
+expr_bool: expr_bool "or" expr_and   -> or_op
+            | expr_and
+expr_and: expr_and "and" expr_not    -> and_op
+            | expr_not
+expr_not: "not" expr_cmp             -> not_op
+            | expr_cmp
+expr_cmp: expr_arith rel_op expr_arith -> rel_op
+            | expr_arith
+rel_op: "<" | ">" | "<=" | ">=" | "=" | "<>" | "≠"
+expr_arith: expr_arith add_op expr_term -> arith_op
+            | expr_term
+add_op: "+" | "-"
+expr_term: expr_term mul_op expr_factor -> arith_op
+            | expr_factor
+mul_op: "*" | "/" | "mod" | "div"
+expr_factor: var_name
+            | NUMBER
+            | "T" | "F"
+            | "NULL"
+            | "(" expr ")"
+            | arr_access
+            | func_call
+            | string
+            | graph_expr
+arr_access: var_name ("[" expr "]")+ 
+func_call: "length" "(" var_name ")"
+string: /'(?:[^'\\]|\\.)*'/ | /"(?:[^"\\]|\\.)*"/
+graph_expr: "grafo" | "nodo" | "arista"
+var_name: CNAME
+COMMENT: /►.*/
+NUMBER: /[0-9]+/
+%import common.CNAME
+%import common.WS
+%ignore WS

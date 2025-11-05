@@ -1,0 +1,73 @@
+► Implementación de Búsqueda Binaria Recursiva
+
+► Función de búsqueda binaria recursiva
+BusquedaBinariaRecursiva(arr[], izq, der, objetivo) begin
+    if (der >= izq) then begin
+        medio 🡨 izq + (der - izq) div 2
+        
+        ► Si el elemento está en el medio
+        if (arr[medio] = objetivo) then begin
+            CALL Retornar(medio)
+        end
+        
+        ► Si el elemento es menor, buscar en mitad izquierda
+        if (arr[medio] > objetivo) then begin
+            CALL BusquedaBinariaRecursiva(arr, izq, medio - 1, objetivo)
+        end
+        
+        ► Si el elemento es mayor, buscar en mitad derecha
+        CALL BusquedaBinariaRecursiva(arr, medio + 1, der, objetivo)
+    end
+    
+    ► Elemento no encontrado
+    CALL Retornar(0-1)
+end
+
+► Función auxiliar para retornar valores
+Retornar(valor) begin
+    resultado 🡨 valor
+end
+
+► Programa principal
+Main() begin
+    ► Declarar y llenar arreglo ordenado
+    arr[10]
+    n 🡨 10
+    
+    arr[0] 🡨 2
+    arr[1] 🡨 5
+    arr[2] 🡨 8
+    arr[3] 🡨 12
+    arr[4] 🡨 16
+    arr[5] 🡨 23
+    arr[6] 🡨 38
+    arr[7] 🡨 45
+    arr[8] 🡨 56
+    arr[9] 🡨 67
+    
+    ► Buscar el valor 23
+    objetivo 🡨 23
+    CALL BusquedaBinariaRecursiva(arr, 0, n - 1, objetivo)
+    indice 🡨 resultado
+    
+    ► Verificar resultado
+    if (indice <> -1) then begin
+        ► Elemento encontrado en posición indice
+        posicion 🡨 indice
+    end else begin
+        ► Elemento no encontrado
+        posicion 🡨 -1
+    end
+    
+    ► Búsqueda del valor 45
+    objetivo2 🡨 45
+    CALL BusquedaBinariaRecursiva(arr, 0, n - 1, objetivo2)
+    indice2 🡨 resultado
+    
+    ► Búsqueda de valor inexistente
+    objetivo3 🡨 99
+    CALL BusquedaBinariaRecursiva(arr, 0, n - 1, objetivo3)
+    indice3 🡨 resultado
+end
+
+CALL Main()
