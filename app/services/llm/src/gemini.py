@@ -11,7 +11,7 @@ dotenv.load_dotenv()
 MODEL = os.getenv("MODEL", "gemini-2.5-flash")
 
 SYSTEM_PROMPT = ""
-with open('./services/llm/src/prompts/SYSTEMPROMPT.md', 'r') as f:
+with open('./app/services/llm/src/prompts/SYSTEMPROMPT.md', 'r') as f:
         SYSTEM_PROMPT = f.read()
 
         
@@ -33,7 +33,7 @@ def ask_gemini_system(prompt: str) -> str:
 
 def parse_nl_code(prompt: str) -> str:
     # Retrieve and encode the PDF byte
-    file_path = pathlib.Path('./services/llm/src/prompts/Proyecto_Gramatica.pdf')
+    file_path = pathlib.Path('./app/services/llm/src/prompts/Proyecto_Gramatica.pdf')
     # Upload the PDF using the File API
     sample_file = client.files.upload(
     file=file_path,
