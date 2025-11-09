@@ -10,4 +10,7 @@ dependencies = [
 "matplotlib==3.10.6",
 "sympy==1.14.0",
 "lark==1.3.0",
+"langchain",
+"langchain-google-genai",
+"langgraph"
 ]
