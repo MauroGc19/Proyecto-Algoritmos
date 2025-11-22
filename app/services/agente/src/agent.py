@@ -1,72 +1,12 @@
-from .tools import *
-
-from typing import TypedDict, Annotated, Literal
-
-import os
-import dotenv
-
-from langchain_google_genai import ChatGoogleGenerativeAI
-
-from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, ToolMessage
+from .tools.toolsIterativas import *
+from .nodes import *
 
 from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from langgraph.prebuilt import ToolNode
 
-dotenv.load_dotenv()
 
-class CodeState(TypedDict):
-    code: Annotated[str, "Codigo original, a ser compilado y estudiado"]
-    mermaid_graph: Annotated[str, "Codigo simplificado, sera utilizado para estudiar y sacar las eficiencias"]
-    type: Annotated[Literal["RECURSIVO", "ITERATIVO", "ERROR"], "Tipo de codigo: 'RECURSIVO', 'ITERATIVO', 'ERROR'"]
-    eficiencia_t: Annotated[str, "Eficiencia temporal del codigo"]
-    eficiencia_e: Annotated[str, "Eficiencia espacial del codigo"]
 
-# Modelo para código recursivo
-gemini_recursivo = ChatGoogleGenerativeAI(
-    model=os.environ.get("MODEL", "gemini-2.5-flash"), 
-    api_key=os.environ["GEMINI_API_KEY"]
-)
 
-# Modelo para código iterativo
-gemini_iterativo = ChatGoogleGenerativeAI(
-    model=os.environ.get("MODEL", "gemini-2.5-flash"), 
-    api_key=os.environ["GEMINI_API_KEY"]
-)
 
-# Herramientas específicas para cada tipo
-tools_recursivo = []  # Herramientas para recursivos
-tools_iterativo = []  # Herramientas para iterativos
-
-# Bind tools a cada modelo
-gemini_recursivo_with_tools = gemini_recursivo.bind_tools(tools_recursivo)
-gemini_iterativo_with_tools = gemini_iterativo.bind_tools(tools_iterativo)
-
-tools_node_recursivo = ToolNode(tools_recursivo, name="tools_recursivo")
-tools_node_iterativo = ToolNode(tools_iterativo, name="tools_iterativo")
-
-# nodos
-def compilar_codigo_node(state: CodeState) -> CodeState:
-    return state
-
-def analizar_codigo_node(state: CodeState) -> CodeState:
-    return state
-
-def analisador_patrones_recursivo_node(state: CodeState) -> CodeState:
-    return state
-
-def analisador_patrones_iterativo_node(state: CodeState) -> CodeState:
-    return state
-
-def aplicar_metodos_analisis_recursivo_node(state: CodeState) -> CodeState:
-    return state
-
-def aplicar_metodos_analisis_iterativo_node(state: CodeState) -> CodeState:
-    return state
-
-def preparar_salida_node(state: CodeState) -> CodeState:
-    return state
-    
 
 # Grafo de estados
 graph_builder = StateGraph(CodeState)
