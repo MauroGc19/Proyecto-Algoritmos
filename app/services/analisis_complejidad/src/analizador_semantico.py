@@ -18,6 +18,7 @@ Reglas implementadas:
     El llamado a una subrutina se hace con CALL seguido por el nombre de la subrutina y entre paréntesis, el nombre de los parámetros.
 """
 
+
 class AnalizadorSemantico:
     """
     Analizador semántico para el compilador de pseudocódigo.

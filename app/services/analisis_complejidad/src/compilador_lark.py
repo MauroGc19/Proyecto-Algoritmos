@@ -1,5 +1,6 @@
-from  lark import Lark, Transformer, v_args
-pseudo_grammar = r'''
+from lark import Lark, Transformer
+
+pseudo_grammar = r"""
     start: statement+
 
     statement: assignment
@@ -74,11 +75,15 @@ pseudo_grammar = r'''
     %import common.CNAME
     %import common.WS
     %ignore WS
-'''
+"""
+
+
 def pedir_dato(nombre, tipo="var", dimensiones=None):
     if tipo == "arreglo":
         if dimensiones is None or len(dimensiones) == 0:
-            n = int(input(f"Ingrese la cantidad de elementos para el arreglo {nombre}: "))
+            n = int(
+                input(f"Ingrese la cantidad de elementos para el arreglo {nombre}: ")
+            )
             return [input(f"{nombre}[{i}]=") for i in range(n)]
         else:
             # Soporte para arreglos multidimensionales
@@ -88,8 +93,15 @@ def pedir_dato(nombre, tipo="var", dimensiones=None):
             elif isinstance(dim, int):
                 pass
             else:
-                dim = int(input(f"Ingrese la cantidad de elementos para la dimensión de {nombre}: "))
-            return [pedir_dato(f"{nombre}[{i}]", "arreglo", dimensiones[1:]) for i in range(dim)]
+                dim = int(
+                    input(
+                        f"Ingrese la cantidad de elementos para la dimensión de {nombre}: "
+                    )
+                )
+            return [
+                pedir_dato(f"{nombre}[{i}]", "arreglo", dimensiones[1:])
+                for i in range(dim)
+            ]
     else:
         return input(f"Ingrese el valor para {nombre}: ")
 
@@ -106,14 +118,23 @@ class PseudoTransformer(Transformer):
 
     def assignment(self, items):
         if self.asignacion_en_linea:
-            self.errores.append("Error: No se permiten asignaciones múltiples en una sola línea.")
+            self.errores.append(
+                "Error: No se permiten asignaciones múltiples en una sola línea."
+            )
         self.asignacion_en_linea = True
         var = str(items[0])
         val = items[1]
         # Asignación por referencia para arreglos/objetos
         if isinstance(val, dict) or isinstance(val, list):
             self.variables[var] = val
-        elif isinstance(val, str) and val in self.variables and (isinstance(self.variables[val], dict) or isinstance(self.variables[val], list)):
+        elif (
+            isinstance(val, str)
+            and val in self.variables
+            and (
+                isinstance(self.variables[val], dict)
+                or isinstance(self.variables[val], list)
+            )
+        ):
             self.variables[var] = self.variables[val]
         else:
             self.variables[var] = val
@@ -209,11 +230,14 @@ class PseudoTransformer(Transformer):
         # Identificar si el parámetro es un arreglo (tiene '[]')
         nombre_param = str(items[0])
         if nombre_param.endswith("[]"):
-            return ("arreglo", nombre_param[:-2])  # Retorna el nombre sin '[]' y lo marca como arreglo
+            return (
+                "arreglo",
+                nombre_param[:-2],
+            )  # Retorna el nombre sin '[]' y lo marca como arreglo
         return nombre_param  # Retorna el nombre del parámetro como cadena normal
 
-    def array_param(self, items):
-        return ("arreglo", str(items[0]), items[1])
+    # def array_param(self, items):
+    #     return ("arreglo", str(items[0]), items[1])
 
     def array_dims(self, items):
         return items
@@ -230,7 +254,9 @@ class PseudoTransformer(Transformer):
         else:
             params = self.subrutinas[nombre]["parametros"]
             if len(argumentos) != len(params):
-                self.errores.append(f"Error: Número de parámetros incorrecto en llamada a '{nombre}'.")
+                self.errores.append(
+                    f"Error: Número de parámetros incorrecto en llamada a '{nombre}'."
+                )
 
     def arg_list(self, items):
         return items
@@ -240,8 +266,9 @@ class PseudoTransformer(Transformer):
         indices = items[1:]
         # Registrar dimensiones si no existen
         if nombre not in self.arreglos:
-            self.arreglos[nombre] = [None]*len(indices)
+            self.arreglos[nombre] = [None] * len(indices)
         return ("arreglo", nombre, indices)
+
     def array_param(self, items):
         nombre = str(items[0])
         dimensiones = items[1]
@@ -259,15 +286,16 @@ class PseudoTransformer(Transformer):
         self.asignacion_en_linea = False
         return items
 
+
 # Función principal para compilar un archivo txt
 
-def compilar_archivo_txt(ruta):
-    with open(ruta, encoding='utf-8') as f:
-        codigo = f.read()
+
+def compilar_codigo(codigo: str):
     parser = Lark(pseudo_grammar, parser="lalr", transformer=PseudoTransformer())
     parser.parse(codigo)
     print("El archivo se compiló correctamente.")
 
+
 if __name__ == "__main__":
     archivo = "app/services/analisis-complejidad/test/Prueba1.txt"
-    compilar_archivo_txt(archivo)
+    compilar_codigo(archivo)

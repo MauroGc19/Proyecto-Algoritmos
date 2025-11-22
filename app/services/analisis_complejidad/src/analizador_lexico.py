@@ -20,6 +20,7 @@ Reglas implementadas:
 
 import re
 
+
 class AnalizadorLexico:
     """
     Analizador léxico para el compilador de pseudocódigo.
@@ -44,13 +45,13 @@ class AnalizadorLexico:
         self.tokens = []
 
     def eliminar_comentarios(self):
-        lineas = self.codigo.split('\n')
+        lineas = self.codigo.split("\n")
         sin_comentarios = []
         for linea in lineas:
-            if '►' in linea:
-                linea = linea.split('►')[0]
+            if "►" in linea:
+                linea = linea.split("►")[0]
             sin_comentarios.append(linea)
-        self.codigo = '\n'.join(sin_comentarios)
+        self.codigo = "\n".join(sin_comentarios)
 
     def obtener_tokens(self):
         self.eliminar_comentarios()
@@ -68,7 +69,7 @@ class AnalizadorLexico:
             |(\"(?:[^\"\\]|\\.)*\")
         """
         patron = patron.replace("\n", "").replace("    ", "")
-        for linea in self.codigo.split('\n'):
+        for linea in self.codigo.split("\n"):
             tokens_linea = re.findall(patron, linea)
             # Unir todos los grupos en un solo token por coincidencia
             tokens_linea = [next(filter(None, t)) for t in tokens_linea if any(t)]

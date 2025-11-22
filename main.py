@@ -1,4 +1,7 @@
-from app.services.llm.main import main
+import sympy
 
-if __name__ == "__main__":
-    main()
+cadena = "Sum(Sum(1, (k, 1, m)), (k, 1, m))"
+
+expr = sympy.sympify(cadena)
+print(expr)
+print(expr.doit())

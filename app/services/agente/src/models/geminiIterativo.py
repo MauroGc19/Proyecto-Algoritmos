@@ -3,6 +3,7 @@ import dotenv
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.prebuilt import ToolNode
+from ..tools.toolsIterativas import convertir_a_sumatoria, calcular_costo_funcion_temporal
 
 
 dotenv.load_dotenv()
@@ -12,7 +13,7 @@ gemini_iterativo = ChatGoogleGenerativeAI(
     api_key=os.environ["GEMINI_API_KEY"]
 )
 
-tools_iterativo = []  # Herramientas para iterativos
+tools_iterativo = [convertir_a_sumatoria, calcular_costo_funcion_temporal]
 
 gemini_iterativo_with_tools = gemini_iterativo.bind_tools(tools_iterativo)
 
