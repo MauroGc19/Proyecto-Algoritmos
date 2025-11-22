@@ -24,8 +24,7 @@ example = [
                     ): {  # ciclo for que itera k veces (donde k  es una variable dependiente de n)
                         (
                             "if",
-                            "condicion",
-                            0.7,  # probabilidad estimada
+                            "condicion"
                         ): {},  # if con condicion booleana que ejecuta un bloque de costo c
                         "else": {
                             ("while", "condicion"): {},
