@@ -20,7 +20,7 @@ example = [
                 ("for", "n"): {  # ciclo for que itera n veces
                     (
                         "for",
-                        "k",
+                        "n/2",
                     ): {  # ciclo for que itera k veces (donde k  es una variable dependiente de n)
                         (
                             "if",
