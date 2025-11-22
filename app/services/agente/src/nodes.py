@@ -24,7 +24,7 @@ class CodeState(TypedDict):
 # nodos
 def compilar_codigo_node(state: CodeState) -> CodeState:
     try:
-        compilar_codigstate.get("code", ""))
+        compilar_codigo(state.get("code", ""))
     except Exception as e:
         print("Error de compilacion:", e)
         state["type"] = "ERROR"
