@@ -1,6 +1,7 @@
 from langchain.tools import tool
-import sympy
+from sympy import Sum
 # implementar las tools
 @tool
-def calcular_sumatoria():
+def calcular_sumatoria(var: str,expresion: str):
+    
     pass
